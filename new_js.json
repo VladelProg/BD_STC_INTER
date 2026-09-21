@@ -1,0 +1,28 @@
+[
+    {
+        "root": {
+            "cancompile": false,
+            "encoding": [
+                "ANSI",
+                "UTF"
+            ],
+            "fileformats": "everything",
+            "hasintellisense": true,
+            "hasplugins": true,
+            "texteditor": "notepad++"
+        }
+    },
+    {
+        "root": {
+            "cancompile": true,
+            "encoding": [
+                "ANSI",
+                "UTF-8"
+            ],
+            "fileformats": "everything",
+            "hasintellisense": true,
+            "hasplugins": true,
+            "texteditor": "VisualStudio Code"
+        }
+    }
+]

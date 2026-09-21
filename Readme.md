@@ -1,4 +1,4 @@
-# EditorViewer - Приложение для просмотра и управления данными редакторов
+# Тестовое задание СТЦ
 
 ## Описание
 
@@ -17,7 +17,7 @@
 
 ## Требования
 
-- Qt 5.x
+- Qt 5
 - C++14
 - qmake
 - SQLite
@@ -26,12 +26,12 @@
 
 ```bash
 # Клонирование репозитория
-git clone <repository-url>
-cd BD_STC_TEST 
+git clone https://github.com/VladelProg/BD_STC_INTER
+cd BD_STC_TEST
 
 # Сборка
 qmake BD_STC_TEST.pro
 make
 
 # Запуск
-./EditorViewer
+./BD_STC_TEST

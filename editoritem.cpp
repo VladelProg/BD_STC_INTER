@@ -1,17 +1,18 @@
 #include "editoritem.h"
 
 bool EditorItem::toBool(const QString &s) {
+    // Идет распознование по четкому совпадению, иначе поле строки зануляется
+    // Можно по идее распозновать ошибку значения (tru -> true)
     QString t = s.trimmed().toLower();
     return (t == "true" || t == "1" || t == "yes");
 }
 
-// Вспомогательная функция: разбивает строку по ";" и тримит части
+// разбивает строку по ";" и тримит части
 static QJsonValue toJsonArrayOrString(const QString &s) {
     QStringList parts = s.split(';', Qt::SkipEmptyParts);
     for (QString &p : parts)
         p = p.trimmed();
 
-    // Убираем возможные пустые строки после трима
     parts.removeAll(QString());
 
     if (parts.size() <= 1) {
@@ -21,7 +22,7 @@ static QJsonValue toJsonArrayOrString(const QString &s) {
     QJsonArray arr;
     for (const QString &p : parts)
         arr.append(p);
-    return arr;  // Несколько значений — массив
+    return arr;  // Несколько значений — массив (csv)
 }
 
 QJsonObject EditorItem::toJson() const {
@@ -65,7 +66,6 @@ EditorItem EditorItem::fromJsonObject(const QJsonObject &obj, const QString &sou
     EditorItem item;
     item.sourceFile = source;
 
-    // Если есть вложенный объект (например "root"), берём его
     QJsonObject data = obj;
     if (obj.size() == 1) {
         QJsonValue firstVal = obj.begin().value();

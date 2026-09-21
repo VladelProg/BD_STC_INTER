@@ -20,7 +20,10 @@ void DatabaseManager::initDatabase() {
     }
     if (!ensureTable()) {
         emit errorOccurred("Не удалось создать таблицу: " + db.lastError().text());
+        return;
     }
+
+    loadAllItems();
 }
 
 bool DatabaseManager::ensureTable() {

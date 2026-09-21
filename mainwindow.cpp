@@ -26,8 +26,8 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent), ui(new Ui::MainWindow
     dbManager->moveToThread(dbThread);
 
     connect(dbThread, &QThread::started, dbManager, &DatabaseManager::initDatabase);
-    connect(dbManager, &DatabaseManager::initDatabase, this, &MainWindow::requestLoadAll, Qt::QueuedConnection);
-    connect(dbManager, &DatabaseManager::initDatabase, dbManager, &DatabaseManager::loadAllItems, Qt::QueuedConnection);
+//    connect(dbManager, &DatabaseManager::initDatabase, this, &MainWindow::requestLoadAll, Qt::QueuedConnection);
+//    connect(dbManager, &DatabaseManager::initDatabase, dbManager, &DatabaseManager::loadAllItems, Qt::QueuedConnection);
 
     connect(dbManager, &DatabaseManager::allItemsLoaded, this, &MainWindow::onAllItemsLoaded);
     connect(dbManager, &DatabaseManager::itemsInserted,  this, &MainWindow::onItemsInserted);

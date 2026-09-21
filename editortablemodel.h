@@ -8,10 +8,9 @@
 class EditorTableModel : public QAbstractTableModel {
     Q_OBJECT
 public:
-    enum Column {
-        ColTextEditor = 0, ColFileFormats, ColEncoding,
-        ColHasIntellisense, ColHasPlugins, ColCanCompile,
-        ColCount
+    enum /*Column*/class Column : int {
+        TextEditor = 0, FileFormats, Encoding,
+        HasIntellisense, HasPlugins, CanCompile
     };
 
     explicit EditorTableModel(QObject *parent = nullptr);
@@ -34,6 +33,7 @@ public:
 
 private:
     QList<EditorItem> _items;
+    static constexpr uint8_t colCount = 6;
 };
 
 #endif // EDITORTABLEMODEL_H

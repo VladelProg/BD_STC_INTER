@@ -63,8 +63,29 @@ bool ImportWorker::parseJsonFile(const QString &filePath, QList<EditorItem> &out
         error = "Ошибка парсинга JSON: " + parseErr.errorString();
         return false;
     }
-    if (!doc.isObject()) { error = "JSON не является объектом"; return false; }
 
+
+    if (!doc.isObject()) {
+        error = "JSON не является объектом";
+
+        return false;
+    }
+
+//    if (doc.isArray()) скорее всего эта обработка не нужна, т.к. заранее известно, что у нас будет только один объект
+//    {
+//        error = "JSON является массивом";
+
+//        QJsonArray arr = doc.array();
+//        for (auto it = arr.begin(); it != arr.end(); it++){
+//            QJsonObject obj = it->toObject();
+//            if (!doc.isObject()) { return false;}
+//            EditorItem item = EditorItem::fromJsonObject(obj, QFileInfo(filePath).fileName());
+//            out.append(item);
+
+//            qDebug() << " ";
+
+//        }
+//    }
     EditorItem item = EditorItem::fromJsonObject(doc.object(), QFileInfo(filePath).fileName());
     out.append(item);
     return true;

@@ -1,21 +1,23 @@
 #include "editortablemodel.h"
 
+//const uint8_t EditorTableModel::colCount = 6;
+
 EditorTableModel::EditorTableModel(QObject *parent) : QAbstractTableModel(parent) {}
 
 int EditorTableModel::rowCount(const QModelIndex &) const { return _items.size(); }
-int EditorTableModel::columnCount(const QModelIndex &) const { return ColCount; }
+int EditorTableModel::columnCount(const QModelIndex &) const { return colCount; }
 
 QVariant EditorTableModel::data(const QModelIndex &index, int role) const {
     if (!index.isValid() || index.row() >= _items.size()) return {};
     const EditorItem &it = _items[index.row()];
     if (role == Qt::DisplayRole || role == Qt::EditRole) {
-        switch (index.column()) {
-        case ColTextEditor:      return it.textEditor;
-        case ColFileFormats:     return it.fileFormats;
-        case ColEncoding:        return it.encoding;
-        case ColHasIntellisense: return it.hasIntellisense ? "Да" : "Нет";
-        case ColHasPlugins:      return it.hasPlugins      ? "Да" : "Нет";
-        case ColCanCompile:      return it.canCompile      ? "Да" : "Нет";
+        switch (static_cast<Column>(index.column())) {
+        case Column::TextEditor:      return it.textEditor;
+        case Column::FileFormats:     return it.fileFormats;
+        case Column::Encoding:        return it.encoding;
+        case Column::HasIntellisense: return it.hasIntellisense ? "Да" : "Нет";
+        case Column::HasPlugins:      return it.hasPlugins      ? "Да" : "Нет";
+        case Column::CanCompile:      return it.canCompile      ? "Да" : "Нет";
         }
     }
     if (role == Qt::TextAlignmentRole) return int(Qt::AlignCenter);
@@ -24,13 +26,13 @@ QVariant EditorTableModel::data(const QModelIndex &index, int role) const {
 
 QVariant EditorTableModel::headerData(int section, Qt::Orientation ori, int role) const {
     if (ori != Qt::Horizontal || role != Qt::DisplayRole) return {};
-    switch (section) {
-    case ColTextEditor:      return "Редактор";
-    case ColFileFormats:     return "Форматы";
-    case ColEncoding:        return "Кодировка";
-    case ColHasIntellisense: return "IntelliSense";
-    case ColHasPlugins:      return "Плагины";
-    case ColCanCompile:      return "Компиляция";
+    switch (static_cast<Column>(section)) {
+    case Column::TextEditor:      return "Редактор";
+    case Column::FileFormats:     return "Форматы";
+    case Column::Encoding:        return "Кодировка";
+    case Column::HasIntellisense: return "IntelliSense";
+    case Column::HasPlugins:      return "Плагины";
+    case Column::CanCompile:      return "Компиляция";
     }
     return {};
 }
@@ -66,7 +68,7 @@ void EditorTableModel::updateItem(const EditorItem &item) {
     for (int i = 0; i < _items.size(); ++i) {
         if (_items[i].id == item.id) {
             _items[i] = item;
-            emit dataChanged(index(i, 0), index(i, ColCount - 1));
+            emit dataChanged(index(i, 0), index(i, colCount - 1));
             return;
         }
     }
